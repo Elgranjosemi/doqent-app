@@ -1,33 +1,68 @@
-// ID de tu hoja de cálculo
-const SHEET_ID = '2PACX-1vR928bVQBOt9Oc2FZnT3ijUycCCRqc7DWP0ptiiJDUC6nVCNy9Tsx8LeJvesKmBvXRINOUdpXknH7lJ';
+// URL de tu formulario de Google Forms (con /formResponse al final)
+const FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSebBvCdTwaTTe_89ZDKMkSZidfFfiKPQpZKLNM3RwvlQpRiUw/formResponse';
 
-// URL para leer la hoja de compañeros
-const COMPANIONS_URL = `https://docs.google.com/spreadsheets/d/e/${SHEET_ID}/pub?gid=0&single=true&output=csv`;
+// IDs de los campos de tu formulario
+const FIELD_IDS = {
+  producto_entregado: 'entry.1238548678',
+  comunidad_empresa: 'entry.971480510',
+  fecha_entrega: 'entry.477138169',
+  nombre_receptor: 'entry.1093291332',
+  persona_entrega: 'entry.2112545665',
+  firma_receptor: 'entry.1393363151',
+};
 
-// Función para leer compañeros desde Google Sheets
-async function loadCompanionsFromSheet() {
-  try {
-    const response = await fetch(COMPANIONS_URL);
-    const text = await response.text();
-    const rows = text.split('\n').slice(1); // Saltamos encabezado
+// Función para enviar datos al formulario
+function submitToGoogleForms(formData) {
+  const formBody = new URLSearchParams({
+    [FIELD_IDS.producto_entregado]: formData.producto_entregado,
+    [FIELD_IDS.comunidad_empresa]: formData.comunidad_empresa,
+    [FIELD_IDS.fecha_entrega]: formData.fecha_entrega,
+    [FIELD_IDS.nombre_receptor]: formData.nombre_receptor,
+    [FIELD_IDS.persona_entrega]: formData.persona_entrega,
+    // La firma se sube como archivo (esto es más complejo)
+  });
 
-    companions = [];
-    rows.forEach(row => {
-      const [nombre_completo, cargo_o_rol] = row.split(',');
-      if (nombre_completo) {
-        companions.push({ nombre_completo, cargo_o_rol });
+  fetch(FORM_URL, {
+    method: 'POST',
+    body: formBody,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  })
+    .then(response => {
+      if (response.ok) {
+        alert('Entrega registrada correctamente');
+      } else {
+        alert('Error al guardar la entrega');
       }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('Error al enviar los datos');
     });
-
-    // Guardar en localStorage también
-    localStorage.setItem('companions', JSON.stringify(companions));
-    loadCompanionsInForm();
-  } catch (error) {
-    console.error('Error al leer compañeros:', error);
-  }
 }
 
-// Cargar compañeros al iniciar
-window.onload = () => {
-  loadCompanionsFromSheet();
-};
+// Registrar entrega (ahora envía al formulario)
+document.getElementById('deliveryForm')?.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const delivery = {
+    producto_entregado: document.getElementById('producto_entregado').value,
+    comunidad_empresa: document.getElementById('comunidad_empresa').value,
+    fecha_entrega: document.getElementById('fecha_entrega').value,
+    nombre_receptor: document.getElementById('nombre_receptor').value,
+    persona_entrega: document.getElementById('persona_entrega').value,
+    firma_receptor: signaturePad.toDataURL(), // No se envía al formulario
+    timestamp_registro: new Date().toISOString(),
+  };
+
+  // Enviar al formulario
+  submitToGoogleForms(delivery);
+
+  // Guardar localmente también
+  deliveries.push(delivery);
+  saveToLocalStorage();
+
+  document.getElementById('deliveryForm').reset();
+  signaturePad.clear();
+});
