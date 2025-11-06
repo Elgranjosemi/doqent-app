@@ -19,7 +19,7 @@ function submitToGoogleForms(formData) {
     [FIELD_IDS.fecha_entrega]: formData.fecha_entrega,
     [FIELD_IDS.nombre_receptor]: formData.nombre_receptor,
     [FIELD_IDS.persona_entrega]: formData.persona_entrega,
-    // La firma se sube como archivo (esto es más complejo)
+    // La firma no se puede enviar directamente
   });
 
   fetch(FORM_URL, {
@@ -31,14 +31,14 @@ function submitToGoogleForms(formData) {
   })
     .then(response => {
       if (response.ok) {
-        alert('Entrega registrada correctamente');
+        alert('✅ Entrega registrada correctamente');
       } else {
-        alert('Error al guardar la entrega');
+        alert('❌ Error al guardar la entrega');
       }
     })
     .catch(error => {
       console.error('Error:', error);
-      alert('Error al enviar los datos');
+      alert('❌ Error al enviar los datos');
     });
 }
 
