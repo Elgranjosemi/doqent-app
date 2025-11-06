@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Historial de Entregas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Historial de Entregas</h1>
+  </header>
+  <main>
+    <div class="search-box">
+      <input type="text" id="searchBox" placeholder="Buscar producto o comunidad...">
+    </div>
+
+    <div class="filter-box">
+      <label>Desde:</label>
+      <input type="date" id="startDate">
+      <label>Hasta:</label>
+      <input type="date" id="endDate">
+      <label>Compañero:</label>
+      <select id="filtroCompanero"></select>
+    </div>
+
+    <div id="deliveryList"></div>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

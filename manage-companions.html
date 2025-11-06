@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestionar Compañeros</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Gestionar Compañeros</h1>
+  </header>
+  <main>
+    <form id="companionForm">
+      <label for="nombre_completo">Nombre completo:</label>
+      <input type="text" id="nombre_completo" required>
+
+      <label for="cargo_o_rol">Cargo o rol:</label>
+      <input type="text" id="cargo_o_rol" required>
+
+      <button type="submit">Agregar Compañero</button>
+    </form>
+
+    <div id="companionsList"></div>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
