@@ -1,5 +1,5 @@
 // URL de tu formulario de Google Forms (con /formResponse al final)
-const FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSebBvCdTwaTTe_89ZDKMkSZidfFfiKPQpZKLNM3RwvlQpRiUw/formResponse';
+const FORM_URL = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSebBvCdTwaTTe_89ZDKMkSZidfFfiKPQpZKLNM3RwvlQpRiUw/formResponse';
 
 // IDs de los campos de tu formulario
 const FIELD_IDS = {
