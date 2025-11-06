@@ -25,4 +25,5 @@ Aplicación web progresiva (PWA) para registrar entregas con firma digital, bús
 - signature_pad.js
 - jspdf.umd.min.js
 
-- html2canvas.min.js 
+- html2canvas.min.js
+
